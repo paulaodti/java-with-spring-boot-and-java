@@ -1,1 +1,1 @@
-# java-with-spring-boot-and-java-erudio
+# java-with-spring-boot-and-java
