@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.paulo.greeting.exceptions.UnsupportedMathOperationException;
+import br.com.paulo.greeting.exceptions.ResourceNotFoundException;
 
 @RestController()
 @RequestMapping(value = "/math")	
@@ -19,7 +19,7 @@ public class MathController {
 			) throws Exception {
 		if (!isNumeric(numberOne) || !isNumeric(numberTwo))
 		{
-			throw new UnsupportedMathOperationException("Os parâmetros passados estão incorretos");
+			throw new ResourceNotFoundException("Os parâmetros passados estão incorretos");
 		}
 		return convertToDouble(numberOne) + convertToDouble(numberTwo);
 	}
@@ -32,7 +32,7 @@ public class MathController {
 			) throws Exception {
 		if (!isNumeric(numberOne) || !isNumeric(numberTwo))
 		{
-			throw new UnsupportedMathOperationException("Os parâmetros passados estão incorretos");
+			throw new ResourceNotFoundException("Os parâmetros passados estão incorretos");
 		}
 		return convertToDouble(numberOne) - convertToDouble(numberTwo);
 	}
@@ -45,7 +45,7 @@ public class MathController {
 			) throws Exception {
 		if (!isNumeric(numberOne) || !isNumeric(numberTwo))
 		{
-			throw new UnsupportedMathOperationException("Os parâmetros passados estão incorretos");
+			throw new ResourceNotFoundException("Os parâmetros passados estão incorretos");
 		}
 		return convertToDouble(numberOne) * convertToDouble(numberTwo);
 	}
@@ -58,11 +58,11 @@ public class MathController {
 			) throws Exception {
 		if (!isNumeric(numberOne) || !isNumeric(numberTwo))
 		{
-			throw new UnsupportedMathOperationException("Os parâmetros passados estão incorretos");
+			throw new ResourceNotFoundException("Os parâmetros passados estão incorretos");
 		}
 		if (convertToDouble(numberTwo) == 0)
 		{
-			throw new UnsupportedMathOperationException("Não é possível fazer uma divisção por zero");
+			throw new ResourceNotFoundException("Não é possível fazer uma divisção por zero");
 		}
 		return convertToDouble(numberOne) / convertToDouble(numberTwo);
 	}
@@ -74,7 +74,7 @@ public class MathController {
 			) throws Exception {
 		if (!isNumeric(numberOne))
 		{
-			throw new UnsupportedMathOperationException("Os parâmetros passados estão incorretos");
+			throw new ResourceNotFoundException("Os parâmetros passados estão incorretos");
 		}
 		return Math.sqrt(convertToDouble(numberOne));
 	}
