@@ -1,4 +1,4 @@
-package br.com.paulo;
+package br.com.paulo.greeting;
 
 import java.util.concurrent.atomic.AtomicLong;
 
