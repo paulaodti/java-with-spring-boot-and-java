@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.com.paulo.data.vo.v1.PersonVO;
 import br.com.paulo.greeting.exceptions.ResourceNotFoundException;
+import br.com.paulo.mapper.DozerMapper;
 import br.com.paulo.models.Person;
 import br.com.paulo.repositories.PersonRepository;
 
@@ -16,30 +19,37 @@ public class PersonServices {
 	
 	private Logger logger = Logger.getLogger(PersonServices.class.getName());
 	
-	public Person findById(Long id) {
+	public PersonVO findById(Long id) {
 		logger.info("Finding one person!");
-		return personRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+		return DozerMapper.parseObject(personRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!")), 
+				PersonVO.class);
 	}
 
-	public List<Person> findAll() {
+	public List<PersonVO> findAll() {
 		logger.info("Finding all persons!");
-		return personRepository.findAll();
+		return DozerMapper.parseListObjects(personRepository.findAll(),PersonVO.class);
 	}
 	
-	public Person create(Person person) {
+	public PersonVO create(PersonVO person) {
 		logger.info("Creating one person!");
-		return personRepository.save(person);
+		return DozerMapper.parseObject(personRepository.save(
+				DozerMapper.parseObject(person, 
+						Person.class)), 
+				PersonVO.class);
 	}
 	
-	public Person update(Person person) {
+	public PersonVO update(PersonVO person) {
 		logger.info("Updating one person!");
 		var entityPerson = findById(person.getId());
 		entityPerson.setFirstName(person.getFirstName());
 		entityPerson.setLastName(person.getLastName());
 		entityPerson.setGender(person.getGender());
 		entityPerson.setAddress(person.getAddress());
-		return personRepository.save(entityPerson);
+		return DozerMapper.parseObject(personRepository.save(
+				DozerMapper.parseObject(entityPerson, 
+						Person.class)), 
+				PersonVO.class);
 	}
 	
 	public void delete(Long id) {
